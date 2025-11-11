@@ -27,6 +27,8 @@ namespace tsp {
   /* ********************************************************* */
 
   function createTransformersFromPattern(opt: CreateTransformersFromPatternOptions): TransformerBasePlugin {
+    console.log("what");
+
     const { factory, config, program, ls, registerConfig } = opt;
     const { transform, after, afterDeclarations, name, type, transformProgram, ...cleanConfig } = config;
 
