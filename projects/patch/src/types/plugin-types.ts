@@ -15,6 +15,7 @@ declare namespace tsp {
         after?: boolean;
         afterDeclarations?: boolean;
         transformProgram?: boolean;
+        transformHost?: boolean;
     }
     export type TransformerList = Required<ts.CustomTransformers>;
     export type TransformerPlugin = TransformerBasePlugin | TsTransformerFactory;
@@ -37,6 +38,7 @@ declare namespace tsp {
         ts: typeof ts;
     };
     export type ProgramTransformer = (program: ts.Program, host: ts.CompilerHost | undefined, config: PluginConfig, extras: ProgramTransformerExtras) => ts.Program;
+    export type HostTransformer = (host: ts.CompilerHost | undefined, config: PluginConfig, extras: ProgramTransformerExtras) => ts.CompilerHost;
     export type LSPattern = (ls: ts.LanguageService, config: {}) => TransformerPlugin;
     export type CompilerOptionsPattern = (compilerOpts: ts.CompilerOptions, config: {}) => TransformerPlugin;
     export type ConfigPattern = (config: {}) => TransformerPlugin;

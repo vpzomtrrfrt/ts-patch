@@ -250,5 +250,24 @@ namespace tsp {
 
       return res;
     }
+
+    public createHostTransformers(): Array<[ HostTransformer, PluginConfig ]> {
+      const res: Array<[ HostTransformer, PluginConfig ]> = [];
+      for (const plugin of this.plugins) {
+        if (plugin.kind !== 'HostTransformer') continue;
+
+        const { config } = plugin;
+
+        const createFactoryResult = plugin.createFactory();
+        if (createFactoryResult === undefined) continue;
+
+        const { registerConfig, factory: unwrappedFactory } = createFactoryResult;
+        const factory = wrapTransformerFactory(unwrappedFactory as HostTransformer, registerConfig, false);
+
+        res.push([ factory, config ]);
+      }
+
+      return res;
+    }
   }
 }

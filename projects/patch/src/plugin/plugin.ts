@@ -13,7 +13,7 @@ namespace tsp {
       resolveBaseDir: string
     }
 
-    export type Kind = 'SourceTransformer' | 'ProgramTransformer'
+    export type Kind = 'SourceTransformer' | 'ProgramTransformer' | 'HostTransformer'
   }
 
   // endregion
@@ -64,7 +64,9 @@ namespace tsp {
 
       this._createOptions = createOptions;
       this.importKey = config.import || 'default';
-      this.kind = config.transformProgram === true ? 'ProgramTransformer' : 'SourceTransformer';
+      this.kind = config.transformHost === true ? 'HostTransformer' : (
+        config.transformProgram === true ? 'ProgramTransformer' : 'SourceTransformer'
+      );
 
       const { resolveBaseDir } = createOptions;
       const configTransformValue = config.transform!;

@@ -62,6 +62,12 @@ export interface PluginConfig {
    * not apply) Entry point must be (program: Program, host?: CompilerHost) => Program
    */
   transformProgram?: boolean;
+
+  /**
+   * Transform *CompilerHost* instance (alters during createProgram()) (`type`, `after`, & `afterDeclarations` settings will
+   * not apply) Entry point must be (host?: CompilerHost) => CompilerHost
+   */
+  transformHost?: boolean;
 }
 
 export type TransformerList = Required<ts.CustomTransformers>;
@@ -120,6 +126,11 @@ export type ProgramTransformer = (
   config: PluginConfig,
   extras: ProgramTransformerExtras
 ) => ts.Program;
+export type HostTransformer = (
+  host: ts.CompilerHost | undefined,
+  config: PluginConfig,
+  extras: ProgramTransformerExtras
+) => ts.CompilerHost;
 
 export type LSPattern = (ls: ts.LanguageService, config: {}) => TransformerPlugin;
 export type CompilerOptionsPattern = (compilerOpts: ts.CompilerOptions, config: {}) => TransformerPlugin;

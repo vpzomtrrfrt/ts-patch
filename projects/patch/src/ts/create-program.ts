@@ -97,6 +97,14 @@ namespace tsp {
       host!.jsDocParsingMode = tsShim.JSDocParsingMode.ParseAll;
     }
 
+    const hostTransformers = pluginCreator.createHostTransformers();
+
+    hostTransformers.forEach(([ hostTransformer, config ]) => {
+      host = hostTransformer(host, config, { ts: tsp.getTsInstance() });
+    });
+
+    if (createOpts) createOpts.host = host;
+
     /* Invoke TS createProgram */
     let program: tsShim.Program & { originalEmit?: tsShim.Program['emit'] } = createOpts ?
       tsShim.originalCreateProgram(createOpts) :
